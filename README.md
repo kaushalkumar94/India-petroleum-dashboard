@@ -60,6 +60,8 @@ High-level snapshot for leadership and policymakers.
 - Dual-axis line chart: Refinery output vs Indigenous production (Apr 2022 → Mar 2026)
 - Slicers: Year, Product Group
 
+![Dashboard Preview](docs/dashboard.png)
+
 ### Page 2 — Product Mix Analysis *(in progress)*
 Which petroleum products dominate India's output.
 
@@ -153,6 +155,8 @@ All data sourced from **PPAC (Petroleum Planning & Analysis Cell)**, Government 
 └─────────────────────────────────────────────────┘
 ```
 
+![ETL Pipeline](docs/etl_pipeline_oil_dashboard.svg)
+
 ---
 
 ## Data Model
@@ -169,6 +173,8 @@ Star schema with one date dimension and four fact tables.
 | `_Measures` | Measures | — | All DAX calculations |
 
 All fact tables connect to `DateTable[Date]` via Many-to-One relationships with Single cross-filter direction.
+
+![Data Model](docs/model%20view.png)
 
 ---
 
@@ -313,9 +319,9 @@ india-petroleum-dashboard/
 │   └── India_Petroleum_Dashboard.pbix ← Main Power BI file
 │
 ├── docs/
-│   ├── etl_pipeline.png               ← ETL diagram screenshot
-│   ├── data_model.png                 ← Star schema screenshot
-│   └── dashboard_preview.png          ← Page 1 screenshot
+│   ├── etl_pipeline_oil_dashboard.svg ← ETL diagram
+│   ├── model view.png                 ← Power BI model view screenshot
+│   └── dashboard.png                  ← Page 1 screenshot
 │
 └── insights/
     └── key_findings.md                ← Government insights summary
@@ -344,5 +350,5 @@ india-petroleum-dashboard/
 
 ---
 
-*Data source: Petroleum Planning & Analysis Cell (PPAC), Ministry of Petroleum & Natural Gas, Government of India*
+*Data source: Petroleum Planning & Analysis Cell (PPAC), Ministry of Petroleum & Natural Gas, Government of India*  
 *Dashboard built for analytical and research purposes*
