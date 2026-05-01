@@ -15,39 +15,57 @@
 - [DAX Measures](#dax-measures)
 - [Challenges & Solutions](#challenges--solutions)
 - [Directory Structure](#directory-structure)
+- [How To Run](#how-to-run)
 - [Tools Used](#tools-used)
 
 ---
 
 ## Project Overview
 
-This project builds a multi-page interactive Power BI dashboard analyzing India's petroleum sector from **April 2022 to March 2026**, covering:
+This project builds a 3-page interactive Power BI dashboard analyzing India's petroleum sector from **April 2022 to March 2026**, covering:
 
-- Monthly refinery production of petroleum products
-- Indigenous (domestic) crude oil production by company
-- Refinery-wise crude oil processing by oil company
+- Monthly refinery production across 13 petroleum product categories
+- Indigenous crude oil production by company (ONGC, OIL, JVC/Private)
+- Refinery-wise crude oil processing across 21 refineries across India
 - Year-over-Year and Month-over-Month production trends
-- India's import dependency on crude oil
+- India's crude oil import dependency analysis
 
-The dashboard is designed to serve as a **government-level analytical tool** for policymakers, researchers, and energy sector analysts.
+The dashboard is designed as a **government-level analytical tool** for policymakers, energy sector analysts, and researchers.
+
+**Data span:** April 2022 — March 2026 (2025-26 data is Provisional)
+**New data added:** 6 PPAC Excel files processed via Python ETL pipeline
 
 ---
 
 ## Key Insights
 
-| Insight | Value |
+### Executive Level
+| Metric | Value |
 |---|---|
 | Total Refinery Production (2022–2026) | ~1.11 Million (000 MT) |
-| Average Monthly Production | ~23.15K (000 MT) |
+| Average Monthly Production | ~23.15K (000 MT/month) |
 | YoY Production Growth | ~34.47% |
-| Import Dependency | ~89–99% |
+| Import Dependency | ~89.63% |
 | Refinery output growth (Apr 2022 → Mar 2026) | ~22K → ~25K (000 MT/month) |
 
-**Critical finding:** India imports approximately 89–99% of its crude oil needs. While refinery infrastructure is growing steadily, domestic crude production remains stagnant — making India highly vulnerable to global oil price shocks and geopolitical disruptions.
+### Product Mix
+| Finding | Detail |
+|---|---|
+| HSD dominates output | 42.19% of all production — diesel dependency is critical |
+| Top 2 fuels combined | HSD + MS/Petrol = nearly 60% of all output |
+| Fastest growing | ATF +55% from 2022 to 2025 — India's aviation boom post-COVID |
+| Declining products | LSHS and LDO nearly phased out — decarbonization signal |
 
-**Notable anomaly:** Indigenous production crashed to its lowest point in **January 2023** — likely a major supply disruption or planned maintenance shutdown — visible as a sharp dip in the trend line.
+### Indigenous Production & Refineries
+| Finding | Detail |
+|---|---|
+| ONGC dominance | 61.49% of all domestic crude — concentrated supply risk |
+| PSU control | ONGC + OIL = 81.67% — private sector barely present |
+| Largest refinery | RIL Jamnagar — 69K (000 MT), world's largest refining complex |
+| Domestic output trend | Completely flat across 4 years — all refinery growth met by imports |
 
-**Seasonal pattern:** Refinery output consistently dips around **October–November** every year and peaks around **April–May**, suggesting demand-driven cycles tied to agricultural and festival seasons.
+### Critical Policy Finding
+> **India imports approximately 89.63% of its crude oil needs.** While refinery infrastructure grew ~14% over 4 years, domestic crude production remained completely flat. Every additional barrel of refinery throughput came from imported crude — making India's energy security heavily exposed to global oil price shocks and geopolitical risk.
 
 ---
 
@@ -60,28 +78,23 @@ High-level snapshot for leadership and policymakers.
 - Dual-axis line chart: Refinery output vs Indigenous production (Apr 2022 → Mar 2026)
 - Slicers: Year, Product Group
 
-![Dashboard Preview](docs/dashboard.png)
+### Page 2 — Petroleum Product Distribution
+Which petroleum products dominate India's refinery output.
 
-### Page 2 — Product Mix Analysis *(in progress)*
-Which petroleum products dominate India's output.
+- Donut chart: Product share % across all years
+- Clustered horizontal bar chart: Volume by product group sorted by size
+- Heatmap matrix: Year × Product Group with gradient color scaling
+- KPI cards: Top Product, HSD Share %, Total Production, Avg Monthly Production
+- Slicers: Year (tile), Product Group
 
-- Donut chart: Product share %
-- Clustered bar chart: Volume by product group
-- Year-wise matrix with conditional formatting
+### Page 3 — Indigenous & Refinery Analysis
+Company-wise domestic crude and refinery-level processing data.
 
-### Page 3 — Indigenous Production *(planned)*
-Company-wise domestic crude oil breakdown.
-
-- Stacked area chart: ONGC, OIL, JVC/Private over time
-- 100% stacked bar: Company share per year
-- Import dependency gap line
-
-### Page 4 — Seasonality & Trends *(planned)*
-Monthly patterns and seasonal cycles.
-
-- Heat map matrix: Month vs Year
-- Small multiples by product
-- Waterfall chart: MoM change
+- 4 KPI cards: ONGC Share %, Total Refinery Companies, Import Dependency %, Total Indigenous Production
+- Stacked area chart: ONGC vs OIL vs JVC/Private vs Condensate over time
+- Top 10 refineries bar chart (from FactRefineryCompanyWise — unique dataset)
+- Company share donut chart
+- Slicers: Year, Company Name
 
 ---
 
@@ -91,49 +104,90 @@ All data sourced from **PPAC (Petroleum Planning & Analysis Cell)**, Government 
 
 | File | Period | Description | Unit |
 |---|---|---|---|
-| `Monthly_Crude_Oil_Processed_by_Refineries.csv` | Apr 2022 – Mar 2024 | Product-wise refinery output | 000 MT |
-| `Monthly_Indigenous_Crude_Oil_Production.csv` | Apr 2022 – Mar 2024 | Company-wise domestic crude | Million MT |
-| `Monthly_Production_of_Petroleum_Products_by_Refineries_Fractionators.csv` | Apr 2022 – Mar 2024 | Petroleum products (confirmed identical to above) | 000 MT |
-| `2024-2025_Crude_Oil_Processed_by_Refineries.xlsx` | Apr 2024 – Mar 2025 | Refinery-wise crude processed | 000 MT |
-| `2025-2026_Crude_Oil_Processed_by_Refineries.xlsx` | Apr 2025 – Mar 2026 | Refinery-wise crude processed | 000 MT |
-| `2024-2025_INDIGENOUS_CRUDE_OIL_PRODUCTION.xlsx` | Apr 2024 – Mar 2025 | Company-wise domestic crude | Million MT |
-| `2025-2026_INDIGENOUS_CRUDE_OIL_PRODUCTION.xlsx` | Apr 2025 – Mar 2026 | Company-wise domestic crude | Million MT |
-| `2024-205_Production_of_Petroleum_Products_by_Refineries_Fractionators.xlsx` | Apr 2024 – Mar 2025 | Product-wise refinery output | 000 MT |
-| `2025-2026_Production_of_Petroleum_Products_by_Refineries_Fractionators.xlsx` | Apr 2025 – Mar 2026 | Product-wise refinery output | 000 MT |
+| `Monthly_Crude_Oil_Processed_by_Refineries.csv` | Apr 2022–Mar 2024 | Product-wise refinery output | 000 MT |
+| `Monthly_Indigenous_Crude_Oil_Production.csv` | Apr 2022–Mar 2024 | Company-wise domestic crude | Million MT* |
+| `Monthly_Production_of_Petroleum_Products_by_Refineries_Fractionators.csv` | Apr 2022–Mar 2024 | Confirmed identical to above — deleted | 000 MT |
+| `2024-2025_Crude_Oil_Processed_by_Refineries.xlsx` | Apr 2024–Mar 2025 | Refinery-wise crude processed | 000 MT |
+| `2025-2026_Crude_Oil_Processed_by_Refineries.xlsx` | Apr 2025–Mar 2026 | Refinery-wise crude processed | 000 MT |
+| `2024-2025_INDIGENOUS_CRUDE_OIL_PRODUCTION.xlsx` | Apr 2024–Mar 2025 | Company-wise domestic crude | Million MT* |
+| `2025-2026_INDIGENOUS_CRUDE_OIL_PRODUCTION.xlsx` | Apr 2025–Mar 2026 | Company-wise domestic crude | Million MT* |
+| `2024-25_Production_of_Petroleum_Products.xlsx` | Apr 2024–Mar 2025 | Product-wise refinery output | 000 MT |
+| `2025-2026_Production_of_Petroleum_Products.xlsx` | Apr 2025–Mar 2026 | Product-wise refinery output | 000 MT |
+
+*\* Converted to 000 MT (×1000) during ETL for consistency*
 
 ---
 
 ## ETL Pipeline
- 
 
-![ETL Pipeline](docs/etl_pipeline_oil_dashboard.svg)
+```
+┌──────────────────────────────────────────────────────┐
+│                    E — EXTRACT                       │
+│                                                      │
+│   Original CSVs           PPAC Excel Files           │
+│   (3 files, 2022-24)      (6 files, 2024-26)         │
+│   Source: PPAC, Govt of India                        │
+│   Units: 000 MT (refinery) / MMT (indigenous)        │
+└─────────────────────┬────────────────────────────────┘
+                      │
+                      ▼
+┌──────────────────────────────────────────────────────┐
+│                  T — TRANSFORM                       │
+│                                                      │
+│   Python / pandas:                                   │
+│   • Unit fix: MMT × 1000 → 000 MT                   │
+│   • Unpivot: wide format → long format               │
+│   • FY label → calendar date (APR = month 4)        │
+│   • Remove junk rows (logos, totals, notes)          │
+│   • Output: 4 clean CSV files                        │
+│                                                      │
+│   Power Query (inside Power BI):                     │
+│   • Add Product Group column (conditional)           │
+│   • Split aggregate rows vs company rows             │
+│   • Rename columns (DAX-friendly, no spaces)         │
+│   • Set correct data types                           │
+│   • Append new data to existing tables               │
+└─────────────────────┬────────────────────────────────┘
+                      │
+                      ▼
+┌──────────────────────────────────────────────────────┐
+│                   L — LOAD                           │
+│                                                      │
+│              [ DateTable ]  ← dimension              │
+│             /    |     \     \                       │
+│    FactRefinery  │  Indigenous  FactRefinery         │
+│                  │  Companies   CompanyWise          │
+│             Indigenous                               │
+│              Totals                                  │
+│                                                      │
+│   + _Measures table (13 DAX measures)                │
+└──────────────────────────────────────────────────────┘
+```
 
 ---
 
 ## Data Model
 
-Star schema with one date dimension and four fact tables.
+Star schema — one date dimension, four fact tables.
 
-| Table | Type | Rows | Description |
-|---|---|---|---|
-| `DateTable` | Dimension | ~1,461 | Calendar Apr 2022 → Mar 2026 |
-| `FactRefinery` | Fact | ~720 | Product-wise refinery output |
-| `IndigenousProduction_Companies_FINAL` | Fact | ~192 | Company-wise crude production |
-| `IndigenousProduction_Totals_FINAL` | Fact | ~120 | Aggregate crude totals |
-| `FactRefineryCompanyWise` | Fact | ~504 | Refinery-wise crude processed |
-| `_Measures` | Measures | — | All DAX calculations |
+| Table | Type | Description |
+|---|---|---|
+| `DateTable` | Dimension | Calendar Apr 2022 → Mar 2026 with Year, Month, Quarter |
+| `FactRefinery` | Fact | Product-wise refinery output — 13 products, all months |
+| `IndigenousProduction_Companies_FINAL` | Fact | ONGC, OIL, JVC/Private, Condensate monthly production |
+| `IndigenousProduction_Totals_FINAL` | Fact | Aggregate crude totals for KPI cards |
+| `FactRefineryCompanyWise` | Fact | 21 individual refineries — monthly crude processed |
+| `_Measures` | Measures | All DAX calculations stored centrally |
 
-All fact tables connect to `DateTable[Date]` via Many-to-One relationships with Single cross-filter direction.
-
-![Data Model](docs/model%20view.png)
+All fact tables connect to `DateTable[Date]` via Many-to-One, Single cross-filter, Active relationship.
 
 ---
 
 ## DAX Measures
 
 ```dax
-Total Refinery Production =
-SUM(FactRefinery[Quantity_000MT])
+-- Core production
+Total Refinery Production = SUM(FactRefinery[Quantity_000MT])
 
 Total Indigenous Production =
 SUM(IndigenousProduction_Companies_FINAL[Quantity_000MT])
@@ -144,6 +198,10 @@ CALCULATE(
     IndigenousProduction_Totals_FINAL[Company Name] = "Total ( Crude oil + Condensate)"
 )
 
+Total Crude Processed by Refinery =
+SUM(FactRefineryCompanyWise[Quantity_000MT])
+
+-- KPIs
 Import Dependency % =
 DIVIDE(
     [Total Refinery Production] - [Total Indigenous (Aggregated)],
@@ -153,26 +211,47 @@ DIVIDE(
 Avg Monthly Production =
 AVERAGEX(VALUES(DateTable[Year-Month]), [Total Refinery Production])
 
+ONGC Share % =
+DIVIDE(
+    CALCULATE(
+        SUM(IndigenousProduction_Companies_FINAL[Quantity_000MT]),
+        IndigenousProduction_Companies_FINAL[Company Name] = "ONGC"
+    ),
+    CALCULATE(
+        SUM(IndigenousProduction_Companies_FINAL[Quantity_000MT]),
+        ALL(IndigenousProduction_Companies_FINAL[Company Name])
+    ), 0
+) * 100
+
+HSD Share % =
+CALCULATE([Product Share %], FactRefinery[Product Group] = "HSD")
+
+-- Time intelligence
 Production Last Year =
 CALCULATE([Total Refinery Production], SAMEPERIODLASTYEAR(DateTable[Date]))
 
 YoY Change % =
-DIVIDE([Total Refinery Production] - [Production Last Year], [Production Last Year], 0) * 100
+DIVIDE([Total Refinery Production] - [Production Last Year],
+       [Production Last Year], 0) * 100
 
 MoM Change % =
 VAR CurrentMonth = [Total Refinery Production]
-VAR PrevMonth = CALCULATE([Total Refinery Production], DATEADD(DateTable[Date], -1, MONTH))
+VAR PrevMonth = CALCULATE(
+    [Total Refinery Production], DATEADD(DateTable[Date], -1, MONTH))
 RETURN DIVIDE(CurrentMonth - PrevMonth, PrevMonth, 0) * 100
 
 Production YTD =
 CALCULATE([Total Refinery Production], DATESYTD(DateTable[Date]))
 
+-- Product share
 Product Share % =
 DIVIDE(
     SUM(FactRefinery[Quantity_000MT]),
-    CALCULATE(SUM(FactRefinery[Quantity_000MT]), ALL(FactRefinery[Product Group])), 0
+    CALCULATE(SUM(FactRefinery[Quantity_000MT]),
+              ALL(FactRefinery[Product Group])), 0
 ) * 100
 
+-- Dynamic chart title
 Chart Title =
 "Production Trend — " &
 IF(ISFILTERED(FactRefinery[Product Group]),
@@ -185,53 +264,33 @@ IF(ISFILTERED(FactRefinery[Product Group]),
 ## Challenges & Solutions
 
 ### Challenge 1 — Duplicate source files
-**Problem:** `Monthly_Crude_Oil_Processed_by_Refineries.csv` and `Monthly_Production_of_Petroleum_Products_by_Refineries_Fractionators.csv` appeared identical from preview.
+**Problem:** Two of the three original CSVs appeared identical.
+**Solution:** Left Anti Join in Power Query on Date + Products + Quantity → 0 of 360 rows returned. Confirmed identical. Deleted one.
 
-**Solution:** Performed a Left Anti Join merge in Power Query on Date + Products + Quantity. Result: 0 of 360 rows returned — confirmed 100% identical. Deleted one, kept the other as `FactRefinery`.
+### Challenge 2 — Unit mismatch *(most critical)*
+**Problem:** Original indigenous CSV stored values in Million MT but header said 000 MT. Caused a sudden jump in the line chart at Jan 2024.
+**Solution:** Rebuilt both indigenous tables from scratch in Python — multiplying all original values by 1000. Same conversion applied to new PPAC files.
+**Lesson:** Always verify units at source. Government datasets frequently mix reporting units across years.
 
----
+### Challenge 3 — Wide vs long format
+**Problem:** All PPAC Excel files stored months as columns — Power BI needs rows.
+**Solution:** Python/pandas unpivot + fiscal year to calendar year conversion.
 
-### Challenge 2 — Unit mismatch across years (most critical)
-**Problem:** The original `Monthly_Indigenous_Crude_Oil_Production.csv` stored values in **Million Metric Tonnes** (e.g. 2.26) while the column header claimed "000 Metric Tonnes". New PPAC files also used Million MT for indigenous data. This caused a sudden jump in the indigenous production line chart at Jan 2024 — from ~20 (raw MMT) to ~2,300 (correctly converted 000 MT).
-
-**Solution:** Rebuilt both indigenous tables from scratch using Python/pandas — multiplying all original CSV values by 1000, and applying the same conversion to new PPAC files during processing. The fixed files (`IndigenousProduction_Companies_FINAL.csv`, `IndigenousProduction_Totals_FINAL.csv`) replaced all previous attempts.
-
-**Lesson:** Always verify units at source, not just column names. Government datasets frequently mix reporting units across years.
-
----
-
-### Challenge 3 — Wide format vs long format
-**Problem:** All new PPAC Excel files stored months as columns (APR, MAY, JUN...) — a wide format that Power BI cannot use for time-series analysis.
-
-**Solution:** Used Python/pandas to unpivot month columns into rows, map each month abbreviation to its calendar month name and number, and convert fiscal year labels (2024-25) into actual calendar year values (APR–DEC = 2024, JAN–MAR = 2025).
-
----
-
-### Challenge 4 — Aggregate rows mixed with data rows
-**Problem:** `Monthly_Indigenous_Crude_Oil_Production.csv` mixed individual company rows (ONGC, OIL, JVC/Private) with aggregate rows (Total crude oil, Total Crude oil + Condensate, PSU total) in the same column. Summing all rows would double or triple count.
-
-**Solution:** Split into two separate tables in Power Query using Text Filters — one containing company rows only, one containing total rows only. The DAX measure `Total Indigenous (Aggregated)` then filters specifically to "Total (Crude oil + Condensate)" to avoid double counting within the totals table.
-
----
+### Challenge 4 — Aggregate rows mixed with company rows
+**Problem:** Indigenous CSV mixed ONGC/OIL rows with Total rows — summing all would double count.
+**Solution:** Split into two tables in Power Query. DAX measure filters to "Total (Crude oil + Condensate)" only.
 
 ### Challenge 5 — Inconsistent product naming
-**Problem:** The same product appeared under multiple names: HSD-VI, HSD Others; MS-VI, MS Others — making product-level aggregation impossible.
-
-**Solution:** Added a `Product Group` column using a conditional Power Query formula mapping all variants to a clean group name (HSD-VI + HSD Others → "HSD", MS-VI + MS Others → "MS / Petrol", etc.) covering all 13 product types found in the data.
-
----
+**Problem:** HSD-VI, HSD Others, MS-VI, MS Others etc. — same product, different names.
+**Solution:** Product Group column added via conditional Power Query formula covering all 15 variants.
 
 ### Challenge 6 — X-axis sort order
-**Problem:** The `Year-Month` column (formatted as "2023-04") is a text field. Power BI sorted it alphabetically (2022-11 before 2022-09) instead of chronologically.
-
-**Solution:** Replaced `Year-Month` on the X-axis with the actual `DateTable[Date]` column, which Power BI natively sorts chronologically and provides free drill-down hierarchy (Year → Quarter → Month).
-
----
+**Problem:** Year-Month text column sorted alphabetically not chronologically.
+**Solution:** Replaced with DateTable[Date] — native chronological sort + free drill-down hierarchy.
 
 ### Challenge 7 — Power Query step ordering
-**Problem:** Adding custom columns in Power Query failed with "column not recognized" errors because the column rename step had not yet run at the point where the custom column was being inserted.
-
-**Solution:** Always insert custom columns **after** the last Applied Step in Power Query — at that point all renames have occurred and column names are final.
+**Problem:** Custom column formulas failed because column renames had not yet run.
+**Solution:** Always add custom columns after the last Applied Step — all renames are complete at that point.
 
 ---
 
@@ -240,7 +299,7 @@ IF(ISFILTERED(FactRefinery[Product Group]),
 ```
 india-petroleum-dashboard/
 │
-├── README.md                          ← This file
+├── README.md
 │
 ├── data/
 │   ├── raw/
@@ -254,8 +313,8 @@ india-petroleum-dashboard/
 │   │       ├── 2025-2026_Crude_Oil_Processed_by_Refineries.xlsx
 │   │       ├── 2024-2025_INDIGENOUS_CRUDE_OIL_PRODUCTION.xlsx
 │   │       ├── 2025-2026_INDIGENOUS_CRUDE_OIL_PRODUCTION.xlsx
-│   │       ├── 2024-25_Production_of_Petroleum_Products_by_Refineries_Fractionators.xlsx
-│   │       └── 2025-2026_Production_of_Petroleum_Products_by_Refineries_Fractionators.xlsx
+│   │       ├── 2024-25_Production_of_Petroleum_Products.xlsx
+│   │       └── 2025-2026_Production_of_Petroleum_Products.xlsx
 │   │
 │   └── processed/
 │       ├── FactRefinery_2024_2026.csv
@@ -264,19 +323,38 @@ india-petroleum-dashboard/
 │       └── IndigenousProduction_Totals_FINAL.csv
 │
 ├── scripts/
-│   └── process_new_data.py            ← Python ETL script (pandas)
+│   └── process_new_data.py
 │
 ├── powerbi/
-│   └── India_Petroleum_Dashboard.pbix ← Main Power BI file
+│   └── India_Petroleum_Dashboard.pbix
 │
-├── docs/
-│   ├── etl_pipeline_oil_dashboard.svg ← ETL diagram
-│   ├── model view.png                 ← Power BI model view screenshot
-│   └── dashboard.png                  ← Page 1 screenshot
-│
-└── insights/
-    └── key_findings.md                ← Government insights summary
+└── docs/
+    ├── dashboard_page1.png
+    ├── dashboard_page2.png
+    ├── dashboard_page3.png
+    ├── data_model.png
+    └── etl_pipeline.png
 ```
+
+---
+
+## How To Run
+
+**Install dependencies:**
+```bash
+pip install pandas openpyxl
+```
+
+**Run ETL script:**
+```bash
+cd india-petroleum-dashboard
+python scripts/process_new_data.py
+```
+
+Output files appear in `data/processed/` — append to existing Power BI tables via Power Query.
+
+**Open dashboard:**
+Open `powerbi/India_Petroleum_Dashboard.pbix` in Power BI Desktop — all data is pre-loaded.
 
 ---
 
@@ -284,9 +362,9 @@ india-petroleum-dashboard/
 
 | Tool | Purpose |
 |---|---|
-| Python 3 + pandas | ETL — data cleaning, unit conversion, unpivoting, date transformation |
-| Power BI Desktop | Data modeling, DAX measures, dashboard building |
-| Power Query (M) | In-tool data transformation, appending, type setting |
+| Python 3 + pandas | ETL — cleaning, unit conversion, unpivoting, date transformation |
+| Power BI Desktop | Data modeling, DAX, dashboard building |
+| Power Query (M) | In-tool transformation, appending, type setting |
 | DAX | KPI calculations, time intelligence, dynamic titles |
 | GitHub | Version control and project hosting |
 
@@ -294,12 +372,12 @@ india-petroleum-dashboard/
 
 ## Notes
 
-- All quantities are in **000 Metric Tonnes** unless stated otherwise
+- All quantities in **000 Metric Tonnes** unless stated otherwise
 - Data marked **(P)** is **Provisional** — subject to revision by PPAC
-- Indigenous production data for 2025-26 may show incomplete months at the tail end of the dataset
-- The fiscal year in India runs **April to March** — all date conversions account for this
+- India's fiscal year runs **April to March** — all date conversions account for this
+- The two original refinery CSVs were confirmed identical — only one was retained
 
 ---
 
-*Data source: Petroleum Planning & Analysis Cell (PPAC), Ministry of Petroleum & Natural Gas, Government of India*  
-*Dashboard built for analytical and research purposes*
+*Data source: Petroleum Planning & Analysis Cell (PPAC), Ministry of Petroleum & Natural Gas, Government of India*
+*Built for analytical and research purposes only*
