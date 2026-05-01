@@ -1,0 +1,13 @@
+Key Insights From Page 2
+
+#1 HSD Dominates at 42.19% — Nearly half of everything India's refineries produce is High Speed Diesel. This reflects India's massive dependence on diesel for trucks, agriculture, railways and industrial machinery. A critical policy signal — any global diesel price shock hits India disproportionately hard.
+
+#2 MS/Petrol at 16.73% — Petrol is the second largest product. Combined with HSD, these two fuels alone account for nearly 60% of all refinery output — showing India's refinery system is overwhelmingly configured for road transport fuels.
+
+#3 ATF growing visibly — Aviation Turbine Fuel went from 10,865 (2022) → 16,868 (2025) in the matrix — a 55% increase in 3 years reflecting India's aviation boom post-COVID.
+
+#4 2026 numbers are partial — Every product shows a sharp drop in 2026 (HSD: 31,120 vs 1,20,608 in 2025). This is expected — 2025-26 data only covers April 2025 to March 2026 partially. Worth adding a footnote.
+.
+#5 LSHS and LDO nearly extinct — Both show values close to 0.00M in the bar chart. These are heavy industrial fuels being phased out as India shifts to cleaner energy — a strong decarbonization signal.
+
+#6 Others category growing fast — From 22,983 (2022) → 32,495 (2025) — a 41% rise. Worth investigating what's inside "Others" in the source data.
