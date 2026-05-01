@@ -104,56 +104,7 @@ All data sourced from **PPAC (Petroleum Planning & Analysis Cell)**, Government 
 ---
 
 ## ETL Pipeline
-
-```
-┌─────────────────────────────────────────────────┐
-│                  E — EXTRACT                    │
-│                                                 │
-│  Original CSVs        PPAC Excel Files          │
-│  (3 files,            (6 files,                 │
-│   2022–2024)           2024–2026)               │
-│                                                 │
-│  Source: PPAC, Govt of India                    │
-│  Units: 000 MT (refinery) / MMT (indigenous)    │
-└────────────────────────┬────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────┐
-│                T — TRANSFORM                    │
-│                                                 │
-│  Python / pandas:                               │
-│  • Unit conversion: MMT × 1000 → 000 MT         │
-│  • Unpivot: wide format → long format           │
-│  • FY label → calendar date (APR=month 4 etc.) │
-│  • Remove junk rows (logos, totals, notes)      │
-│  • Standardize company names                    │
-│  • Output: 4 clean CSV files                    │
-│                                                 │
-│  Power Query (inside Power BI):                 │
-│  • Add Product Group column (conditional)       │
-│  • Split aggregate rows vs company rows         │
-│  • Rename columns (DAX-friendly, no spaces)     │
-│  • Set data types (Date, Decimal, Text)         │
-│  • Append new data to existing tables           │
-│  • Create Date column from Month + Year         │
-└────────────────────────┬────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────┐
-│                  L — LOAD                       │
-│                                                 │
-│  Star Schema in Power BI:                       │
-│                                                 │
-│              [ DateTable ]                      │
-│             /      |      \      \              │
-│     FactRefinery   │   Indigenous  Refinery     │
-│                    │   Companies   CompanyWise  │
-│              Indigenous                         │
-│               Totals                            │
-│                                                 │
-│  + _Measures table (10 DAX measures)            │
-└─────────────────────────────────────────────────┘
-```
+ 
 
 ![ETL Pipeline](docs/etl_pipeline_oil_dashboard.svg)
 
