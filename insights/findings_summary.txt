@@ -1,0 +1,17 @@
+#1 Critical Policy Alert
+Import Dependency is extremely high — India refines ~1.11M (000 MT) total but produces only ~265K indigenously. This means India imports roughly 76-99% of its crude oil needs making it dangerously exposed to global oil price shocks and geopolitical disruptions.
+
+#2 Positive Trend
+Refinery output grew 34.47% YoY — India's refining capacity is clearly expanding strongly, meaning the country can process more crude as supply becomes available. Infrastructure is not the bottleneck — crude supply is.
+
+#3 Scale of Operations
+Average monthly production of 23.15K (000 MT) across all petroleum products — that is roughly 23 million metric tonnes per month of refined products powering India's economy.
+
+#4 Volatility in Indigenous Supply
+The orange line shows sharp month-to-month swings in domestic crude production — this is a supply reliability problem. Refineries can't plan efficiently when domestic supply fluctuates this unpredictably.
+
+#5 Seasonal Patterns Visible
+Refinery output (blue line) consistently dips around October-November every year and peaks around April-May — suggesting either planned maintenance shutdowns in Q3 or demand-driven production cycles tied to the agricultural and festival season.
+
+#6 Refinery Growth 2022→2026
+The blue line shows a clear upward trajectory from ~22K in April 2022 to ~25K by early 2026 — approximately 14% capacity growth over 4 years, signaling successful government investment in refinery infrastructure.
